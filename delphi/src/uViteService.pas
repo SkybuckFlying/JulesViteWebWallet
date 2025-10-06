@@ -17,6 +17,19 @@ type
     PledgeAmount: string;
   end;
 
+  TPledge = record
+    Beneficiary: string;
+    StakeAmount: string;
+    ExpirationHeight: string;
+    ExpirationTime: Int64;
+  end;
+
+  TPledgeListData = record
+    TotalStakeCount: Integer;
+    TotalStakeAmount: string;
+    StakeList: TArray<TPledge>;
+  end;
+
   // Based on https://docs.vite.org/api/
   TTokenInfo = record
     TokenName: string;
@@ -44,17 +57,90 @@ type
     FHttpClient: TNetHTTPClient;
     function ParseAccountInfo(const AJson: string): TAccountInfo;
     function ParseAccountQuota(const AJson: string): TAccountQuota;
+    function ParseAccountPledgeList(const AJson: string): TPledgeListData;
   public
     constructor Create;
     destructor Destroy; override;
 
     function GetAccountInfo(const AAddress: string): TAccountInfo;
     function GetAccountQuota(const AAddress: string): TAccountQuota;
+    function GetAccountPledgeList(const AAddress: string; PageIndex, PageSize: Integer): TPledgeListData;
+
+    // TODO: Implement the full transaction signing logic for this method.
+    // This will require porting the @vite/vitejs library's AccountBlock
+    // creation, signing (ed25519), and PoW calculation logic.
+    procedure StakeForQuota(const ABeneficiaryAddress: string; const AAmount: string);
   end;
 
 implementation
 
 { TViteService }
+
+function TViteService.ParseAccountPledgeList(const AJson: string): TPledgeListData;
+var
+  JsonObj, ResultObj, StakeListArray: TJSONValue;
+  I: Integer;
+  PledgeObj: TJSONObject;
+begin
+  Result := Default(TPledgeListData);
+  Result.StakeList := [];
+
+  JsonObj := TJSONObject.ParseJSONValue(AJson);
+  if not Assigned(JsonObj) then Exit;
+  try
+    ResultObj := (JsonObj as TJSONObject).GetValue<TJSONObject>('result');
+    if not Assigned(ResultObj) then Exit;
+
+    Result.TotalStakeAmount := (ResultObj as TJSONObject).GetValue<string>('totalStakeAmount');
+    Result.TotalStakeCount := StrToIntDef((ResultObj as TJSONObject).GetValue<string>('totalStakeCount'), 0);
+
+    StakeListArray := (ResultObj as TJSONObject).GetValue('stakeList');
+    if Assigned(StakeListArray) and (StakeListArray is TJSONArray) then
+    begin
+      SetLength(Result.StakeList, (StakeListArray as TJSONArray).Count);
+      for I := 0 to (StakeListArray as TJSONArray).Count - 1 do
+      begin
+        PledgeObj := (StakeListArray as TJSONArray).Items[I] as TJSONObject;
+        Result.StakeList[I].Beneficiary := PledgeObj.GetValue<string>('beneficiary');
+        Result.StakeList[I].StakeAmount := PledgeObj.GetValue<string>('stakeAmount');
+        Result.StakeList[I].ExpirationHeight := PledgeObj.GetValue<string>('expirationHeight');
+        Result.StakeList[I].ExpirationTime := StrToInt64Def(PledgeObj.GetValue<string>('expirationTime'), 0);
+      end;
+    end;
+  finally
+    JsonObj.Free;
+  end;
+end;
+
+function TViteService.GetAccountPledgeList(const AAddress: string; PageIndex, PageSize: Integer): TPledgeListData;
+var
+  JsonRequest: TJSONObject;
+  RequestStream: TStringStream;
+  ResponseContent: string;
+begin
+  JsonRequest := TJSONObject.Create;
+  try
+    JsonRequest.AddPair('jsonrpc', TJSONString.Create('2.0'));
+    JsonRequest.AddPair('id', TJSONNumber.Create(1));
+    JsonRequest.AddPair('method', TJSONString.Create('contract_getStakeList'));
+
+    var ParamsArray := TJSONArray.Create;
+    ParamsArray.Add(TJSONString.Create(AAddress));
+    ParamsArray.Add(TJSONNumber.Create(PageIndex));
+    ParamsArray.Add(TJSONNumber.Create(PageSize));
+    JsonRequest.AddPair('params', ParamsArray);
+
+    RequestStream := TStringStream.Create(JsonRequest.ToString, TEncoding.UTF8);
+    try
+      ResponseContent := FHttpClient.Post(VITE_NODE_URL, RequestStream).ContentAsString;
+      Result := ParseAccountPledgeList(ResponseContent);
+    finally
+      RequestStream.Free;
+    end;
+  finally
+    JsonRequest.Free;
+  end;
+end;
 
 function TViteService.ParseAccountQuota(const AJson: string): TAccountQuota;
 var
@@ -183,6 +269,18 @@ begin
   finally
     JsonRequest.Free;
   end;
+end;
+
+procedure TViteService.StakeForQuota(const ABeneficiaryAddress, AAmount: string);
+begin
+  // This method is a placeholder. The actual implementation will require:
+  // 1. Creating an AccountBlock for the 'stakeForQuota' transaction.
+  // 2. Setting the parameters (beneficiary, amount).
+  // 3. Setting the provider and the active account's private key.
+  // 4. Auto-setting the previous block hash and height.
+  // 5. Calculating the required Proof of Work (PoW).
+  // 6. Signing the block.
+  // 7. Sending the raw transaction to the node.
 end;
 
 end.

@@ -1,0 +1,59 @@
+object PledgeTxFrame: TPledgeTxFrame
+  Size.Width = 370.000000000000000000
+  Size.Height = 180.000000000000000000
+  Size.PlatformDefault = False
+  object LabelFromAddrCaption: TLabel
+    Position.X = 16.000000000000000000
+    Position.Y = 8.000000000000000000
+    Text = 'From Address'
+  end
+  object LabelFromAddr: TLabel
+    Position.X = 16.000000000000000000
+    Position.Y = 28.000000000000000000
+    Size.Width = 337.000000000000000000
+    Size.Height = 17.000000000000000000
+    Size.PlatformDefault = False
+    TabOrder = 0
+    Text = '(No account selected)'
+    Settings = TTextSettings
+      Font.Style = [fsItalic]
+      FontColor = claGray
+    end
+  end
+  object LabelAmountCaption: TLabel
+    Position.X = 16.000000000000000000
+    Position.Y = 56.000000000000000000
+    Text = 'Staking Amount (VITE)'
+  end
+  object EditAmount: TEdit
+    Position.X = 16.000000000000000000
+    Position.Y = 76.000000000000000000
+    Size.Width = 160.000000000000000000
+    Size.Height = 22.000000000000000000
+    Size.PlatformDefault = False
+    TabOrder = 1
+    Text = '134'
+  end
+  object LabelBeneficiaryCaption: TLabel
+    Position.X = 16.000000000000000000
+    Position.Y = 104.000000000000000000
+    Text = 'Beneficiary Address'
+  end
+  object EditBeneficiary: TEdit
+    Position.X = 16.000000000000000000
+    Position.Y = 124.000000000000000000
+    Size.Width = 337.000000000000000000
+    Size.Height = 22.000000000000000000
+    Size.PlatformDefault = False
+    TabOrder = 2
+  end
+  object ButtonSubmit: TButton
+    Position.X = 16.000000000000000000
+    Position.Y = 152.000000000000000000
+    Size.Width = 150.000000000000000000
+    Size.Height = 22.000000000000000000
+    Size.PlatformDefault = False
+    TabOrder = 3
+    Text = 'Submit Stake'
+  end
+end

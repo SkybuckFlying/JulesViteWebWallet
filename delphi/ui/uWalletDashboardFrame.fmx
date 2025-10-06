@@ -2,110 +2,80 @@ object WalletDashboardFrame: TWalletDashboardFrame
   Size.Width = 650.000000000000000000
   Size.Height = 520.000000000000000000
   Size.PlatformDefault = False
-  object PanelContent: TPanel
-    Align = Top
-    Position.Y = 80.000000000000000000
-    Size.Width = 650.000000000000000000
-    Size.Height = 200.000000000000000000
+  object PanelMyQuota: TPanel
+    Align = Left
+    Margins.Left = 10.000000000000000000
+    Margins.Top = 90.000000000000000000
+    Margins.Right = 10.000000000000000000
+    Margins.Bottom = 10.000000000000000000
+    Size.Width = 250.000000000000000000
+    Size.Height = 420.000000000000000000
     Size.PlatformDefault = False
-    TabOrder = 1
-    object PanelMyQuota: TPanel
-      Align = Left
-      Margins.Left = 10.000000000000000000
-      Margins.Top = 10.000000000000000000
-      Margins.Right = 10.000000000000000000
-      Margins.Bottom = 10.000000000000000000
-      Size.Width = 250.000000000000000000
-      Size.Height = 180.000000000000000000
-      Size.PlatformDefault = False
-      TabOrder = 0
-      object LabelMyQuota: TLabel
-        Align = Top
-        Size.Width = 134.000000000000000000
-        Size.Height = 17.000000000000000000
-        Size.PlatformDefault = False
-        TabOrder = 0
-        Text = 'My Address QR Code'
-        Settings = TTextSettings
-        objl-Text = 'Placeholder for My Quota'
-      end
-      object QRCodeFrame: TQRCodeFrame
-        Position.X = 24.000000000000000000
-        Position.Y = 32.000000000000000000
-        Size.Width = 140.000000000000000000
-        Size.Height = 140.000000000000000000
-        Size.PlatformDefault = False
-        TabOrder = 1
-      end
-    end
-    object PanelPledgeTx: TPanel
-      Align = Client
-      Margins.Left = 10.000000000000000000
-      Margins.Top = 10.000000000000000000
-      Margins.Right = 10.000000000000000000
-      Margins.Bottom = 10.000000000000000000
-      Position.X = 270.000000000000000000
-      Size.Width = 370.000000000000000000
-      Size.Height = 180.000000000000000000
-      Size.PlatformDefault = False
-      TabOrder = 1
-      object LabelPledgeTx: TLabel
-        Align = Top
-        Size.Width = 143.000000000000000000
-        Size.Height = 17.000000000000000000
-        Size.PlatformDefault = False
-        TabOrder = 0
-        Text = 'Pledge Tx / API Test'
-        Settings = TTextSettings
-        objl-Text = 'Placeholder for Pledge Tx'
-      end
-      object EditAddress: TEdit
-        Position.X = 16.000000000000000000
-        Position.Y = 32.000000000000000000
-        Size.Width = 337.000000000000000000
-        Size.Height = 22.000000000000000000
-        Size.PlatformDefault = False
-        TabOrder = 1
-        Text = 'vite_0da6ff16542378b9a19427323558f6920155b5ae684a09e0a8'
-      end
-      object ButtonGetInfo: TButton
-        Position.X = 16.000000000000000000
-        Position.Y = 64.000000000000000000
-        Size.Width = 150.000000000000000000
-        Size.Height = 22.000000000000000000
-        Size.PlatformDefault = False
-        TabOrder = 2
-        Text = 'Get Account Info'
-      end
-      object MemoResult: TMemo
-        Position.X = 16.000000000000000000
-        Position.Y = 96.000000000000000000
-        Size.Width = 337.000000000000000000
-        Size.Height = 76.000000000000000000
-        Size.PlatformDefault = False
-        TabOrder = 3
-        Viewport.Width = 333.000000000000000000
-        Viewport.Height = 72.000000000000000000
-      end
-    end
-  end
-  object PanelList: TPanel
-    Align = Client
-    Position.X = 0.000000000000000000
-    Position.Y = 280.000000000000000000
-    Size.Width = 650.000000000000000000
-    Size.Height = 240.000000000000000000
-    Size.PlatformDefault = False
-    TabOrder = 2
-    object LabelList: TLabel
-      Align = Center
-      Size.Width = 111.000000000000000000
+    TabOrder = 0
+    object LabelMyQuota: TLabel
+      Align = Top
+      Size.Width = 134.000000000000000000
       Size.Height = 17.000000000000000000
       Size.PlatformDefault = False
       TabOrder = 0
-      Text = 'Placeholder for List'
+      Text = 'My Address QR Code'
       Settings = TTextSettings
-      objl-Text = 'Placeholder for List'
+      objl-Text = 'Placeholder for My Quota'
     end
+    object QRCodeFrame: TQRCodeFrame
+      Position.X = 24.000000000000000000
+      Position.Y = 32.000000000000000000
+      Size.Width = 140.000000000000000000
+      Size.Height = 140.000000000000000000
+      Size.PlatformDefault = False
+      TabOrder = 1
+    end
+    object LabelAddressCaption: TLabel
+      Position.X = 8.000000000000000000
+      Position.Y = 184.000000000000000000
+      Text = 'Active Address:'
+    end
+    object LabelAddress: TLabel
+      Position.X = 96.000000000000000000
+      Position.Y = 184.000000000000000000
+      Size.Width = 145.000000000000000000
+      Size.Height = 17.000000000000000000
+      Size.PlatformDefault = False
+      TabOrder = 2
+      Text = '(No active account)'
+      Settings = TTextSettings
+        FontColor = claGray
+      end
+    end
+    object ButtonRefreshData: TButton
+      Position.X = 8.000000000000000000
+      Position.Y = 216.000000000000000000
+      Size.Width = 150.000000000000000000
+      Size.Height = 22.000000000000000000
+      Size.PlatformDefault = False
+      TabOrder = 3
+      Text = 'Refresh Data'
+    end
+    object MemoResult: TMemo
+      Position.X = 8.000000000000000000
+      Position.Y = 248.000000000000000000
+      Size.Width = 233.000000000000000000
+      Size.Height = 164.000000000000000000
+      Size.PlatformDefault = False
+      TabOrder = 4
+      Viewport.Width = 229.000000000000000000
+      Viewport.Height = 160.000000000000000000
+    end
+  end
+  object PanelStaking: TPanel
+    Align = Client
+    Margins.Left = 270.000000000000000000
+    Margins.Top = 90.000000000000000000
+    Position.X = 270.000000000000000000
+    Position.Y = 90.000000000000000000
+    Size.Width = 380.000000000000000000
+    Size.Height = 430.000000000000000000
+    Size.PlatformDefault = False
+    TabOrder = 1
   end
 end

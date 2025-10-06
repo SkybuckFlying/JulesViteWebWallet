@@ -1,0 +1,46 @@
+object PledgeListFrame: TPledgeListFrame
+  Size.Width = 650.000000000000000000
+  Size.Height = 240.000000000000000000
+  Size.PlatformDefault = False
+  object LabelTitle: TLabel
+    Align = Top
+    Margins.Left = 5.000000000000000000
+    Margins.Top = 5.000000000000000000
+    Margins.Right = 5.000000000000000000
+    Margins.Bottom = 5.000000000000000000
+    Size.Width = 640.000000000000000000
+    Size.Height = 17.000000000000000000
+    Size.PlatformDefault = False
+    TabOrder = 0
+    Text = 'My Staking List'
+    Settings = TTextSettings
+      Font.Style = [fsBold]
+    end
+  end
+  object ListViewPledges: TListView
+    ItemAppearance = 'ListItem'
+    ItemHeight = 20.000000000000000000
+    Align = Client
+    Position.Y = 27.000000000000000000
+    Size.Width = 650.000000000000000000
+    Size.Height = 213.000000000000000000
+    Size.PlatformDefault = False
+    TabOrder = 1
+    Header.Visible = True
+    Header.Items = <
+      item
+        Text = 'Beneficiary'
+        Width = 250.000000000000000000
+      end
+      item
+        Text = 'Amount (VITE)'
+        Width = 150.000000000000000000
+        TextAlign = Leading
+      end
+      item
+        Text = 'Withdrawal Time'
+        Width = 150.000000000000000000
+        TextAlign = Leading
+      end>
+  end
+end

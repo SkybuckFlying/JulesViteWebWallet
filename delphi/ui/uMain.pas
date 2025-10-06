@@ -39,6 +39,8 @@ implementation
 constructor TMainForm.Create(AOwner: TComponent);
 var
   WalletFrame: TWalletDashboardFrame;
+  PrivateKey: T32ByteArray;
+  I: Integer;
 begin
   inherited;
   // Assign a common event handler to all navigation buttons
@@ -51,6 +53,12 @@ begin
   WalletFrame := TWalletDashboardFrame.Create(Self);
   WalletFrame.Parent := TabWallet;
   WalletFrame.Align := TAlignLayout.Client;
+
+  // Create a default test account and set it in the global state.
+  // This is a placeholder for a real key/wallet management system.
+  for I := 0 to 31 do
+    PrivateKey[I] := I + 1; // Dummy private key
+  TAppState.Instance.ActiveAccount := TViteAccount.Create(PrivateKey);
 end;
 
 procedure TMainForm.NavButtonClick(Sender: TObject);

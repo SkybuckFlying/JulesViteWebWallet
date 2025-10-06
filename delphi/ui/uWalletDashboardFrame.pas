@@ -6,22 +6,19 @@ uses
   System.SysUtils, System.Types, System.UITypes, System.Classes, System.Variants,
   FMX.Types, FMX.Controls, FMX.Forms, FMX.Graphics, FMX.Dialogs, FMX.Layouts, FMX.Controls.Presentation, FMX.StdCtrls,
   FMX.Edit, FMX.Memo, uViteService, uStringUtils, uAppState, System.Generics.Collections, uQuotaHeadFrame,
-  uQRCodeFrame;
+  uQRCodeFrame, uPledgeTxFrame, uPledgeListFrame;
 
 type
   TWalletDashboardFrame = class(TFrame)
-    PanelContent: TPanel;
     PanelMyQuota: TPanel;
     LabelMyQuota: TLabel;
     QRCodeFrame: TQRCodeFrame;
-    PanelPledgeTx: TPanel;
-    LabelPledgeTx: TLabel;
-    EditAddress: TEdit;
-    ButtonGetInfo: TButton;
+    LabelAddressCaption: TLabel;
+    LabelAddress: TLabel;
+    ButtonRefreshData: TButton;
     MemoResult: TMemo;
-    PanelList: TPanel;
-    LabelList: TLabel;
-    procedure ButtonGetInfoClick(Sender: TObject);
+    PanelStaking: TPanel;
+    procedure ButtonRefreshDataClick(Sender: TObject);
   private
     FViteService: TViteService;
     procedure HandleStateChange(Sender: TObject);
@@ -39,6 +36,8 @@ implementation
 constructor TWalletDashboardFrame.Create(AOwner: TComponent);
 var
   HeaderFrame: TQuotaHeadFrame;
+  PledgeTxFrame: TPledgeTxFrame;
+  PledgeListFrame: TPledgeListFrame;
 begin
   inherited;
 
@@ -46,6 +45,16 @@ begin
   HeaderFrame := TQuotaHeadFrame.Create(Self);
   HeaderFrame.Parent := Self;
   HeaderFrame.Align := TAlignLayout.Top;
+
+  // Create and embed the Staking Frames
+  PledgeTxFrame := TPledgeTxFrame.Create(Self);
+  PledgeTxFrame.Parent := PanelStaking;
+  PledgeTxFrame.Align := TAlignLayout.Top;
+
+  PledgeListFrame := TPledgeListFrame.Create(Self);
+  PledgeListFrame.Parent := PanelStaking;
+  PledgeListFrame.Align := TAlignLayout.Client;
+
 
   FViteService := TViteService.Create;
   TAppState.Instance.OnStateChange := HandleStateChange;
@@ -60,52 +69,77 @@ begin
   inherited;
 end;
 
-procedure TWalletDashboardFrame.ButtonGetInfoClick(Sender: TObject);
+procedure TWalletDashboardFrame.ButtonRefreshDataClick(Sender: TObject);
+var
+  ActiveAddress: string;
 begin
+  if not Assigned(TAppState.Instance.ActiveAccount) then
+  begin
+    MemoResult.Lines.Text := 'No active account set.';
+    Exit;
+  end;
+
+  ActiveAddress := TAppState.Instance.ActiveAccount.Address;
   MemoResult.Lines.Clear;
-  MemoResult.Lines.Add('Fetching account and quota info...');
-  ButtonGetInfo.Enabled := False;
+  MemoResult.Lines.Add('Fetching account, quota, and pledge info for ' + ActiveAddress);
+  ButtonRefreshData.Enabled := False;
 
   TThread.CreateAnonymousThread(
     procedure
     var
       LAccountInfo: TAccountInfo;
       LAccountQuota: TAccountQuota;
+      LPledgeList: TPledgeListData;
     begin
       try
-        // Fetch both sets of data in the background
-        LAccountInfo := FViteService.GetAccountInfo(EditAddress.Text);
-        LAccountQuota := FViteService.GetAccountQuota(EditAddress.Text);
+        // Fetch all data in the background using the active address
+        LAccountInfo := FViteService.GetAccountInfo(ActiveAddress);
+        LAccountQuota := FViteService.GetAccountQuota(ActiveAddress);
+        LPledgeList := FViteService.GetAccountPledgeList(ActiveAddress, 0, 50);
 
         // Safely update the global state from the main thread
         TThread.Queue(nil,
           procedure
           begin
-            // Set both properties. The last one will trigger the UI update.
-            TAppState.Instance.CurrentAccount := LAccountInfo;
-            TAppState.Instance.CurrentQuota := LAccountQuota;
+            // Set all properties. The last one will trigger the UI update.
+            TAppState.Instance.CurrentAccountInfo := LAccountInfo;
+            TAppState.Instance.CurrentPledgeList := LPledgeList;
+            TAppState.Instance.CurrentQuota := LAccountQuota; // Triggers OnStateChange
           end);
       except
         on E: Exception do
           TThread.Queue(nil, procedure begin MemoResult.Lines.Add('Error: ' + E.Message); end);
       end;
-      TThread.Queue(nil, procedure begin ButtonGetInfo.Enabled := True; end);
+      TThread.Queue(nil, procedure begin ButtonRefreshData.Enabled := True; end);
     end).Start;
 end;
 
 procedure TWalletDashboardFrame.HandleStateChange(Sender: TObject);
 var
   AccountInfo: TAccountInfo;
+  ActiveAccount: TViteAccount;
   DisplayText: TStringBuilder;
   Pair: TPair<string, TBalanceInfo>;
 begin
-  MemoResult.Lines.Clear;
-  AccountInfo := TAppState.Instance.CurrentAccount;
+  ActiveAccount := TAppState.Instance.ActiveAccount;
+  AccountInfo := TAppState.Instance.CurrentAccountInfo;
 
+  // Update the displayed address
+  if Assigned(ActiveAccount) then
+    LabelAddress.Text := TStringUtils.EllipsisAddr(ActiveAccount.Address, 20, 20)
+  else
+    LabelAddress.Text := '(No active account)';
+
+  // Update account info display in the memo
+  MemoResult.Lines.Clear;
   if AccountInfo.Address = '' then
   begin
-     MemoResult.Lines.Add('No account data loaded.');
-     QRCodeFrame.Text := ''; // Clear QR Code
+     MemoResult.Lines.Add('No account data loaded. Click "Refresh Data".');
+     // Still update QR code if there is an active account
+     if Assigned(ActiveAccount) then
+       QRCodeFrame.Text := ActiveAccount.Address
+     else
+       QRCodeFrame.Text := '';
      Exit;
   end;
 

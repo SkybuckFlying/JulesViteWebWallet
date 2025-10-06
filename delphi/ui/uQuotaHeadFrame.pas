@@ -56,7 +56,7 @@ var
   ViteBalanceStr: string;
   UT: Integer;
 begin
-  AccountInfo := TAppState.Instance.CurrentAccount;
+  AccountInfo := TAppState.Instance.CurrentAccountInfo;
   AccountQuota := TAppState.Instance.CurrentQuota;
 
   // Update Quota from the real API call result
