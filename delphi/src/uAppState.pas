@@ -10,14 +10,17 @@ type
   private
     class var FInstance: TAppState;
     FCurrentAccount: TAccountInfo;
+    FCurrentQuota: TAccountQuota;
     FOnStateChange: TNotifyEvent;
     procedure SetCurrentAccount(const Value: TAccountInfo);
+    procedure SetCurrentQuota(const Value: TAccountQuota);
   public
     class function Instance: TAppState;
     constructor Create;
     destructor Destroy; override;
 
     property CurrentAccount: TAccountInfo read FCurrentAccount write SetCurrentAccount;
+    property CurrentQuota: TAccountQuota read FCurrentQuota write SetCurrentQuota;
     property OnStateChange: TNotifyEvent read FOnStateChange write FOnStateChange;
   end;
 
@@ -52,6 +55,14 @@ begin
 
   FCurrentAccount := Value;
 
+  // Trigger the state change event
+  if Assigned(FOnStateChange) then
+    FOnStateChange(Self);
+end;
+
+procedure TAppState.SetCurrentQuota(const Value: TAccountQuota);
+begin
+  FCurrentQuota := Value;
   // Trigger the state change event
   if Assigned(FOnStateChange) then
     FOnStateChange(Self);

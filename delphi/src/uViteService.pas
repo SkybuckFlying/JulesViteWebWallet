@@ -8,8 +8,15 @@ uses
 
 const
   VITE_NODE_URL = 'https://node.vite.net/gvite/json-rpc';
+  QUOTA_PER_UT = 21000;
 
 type
+  TAccountQuota = record
+    CurrentQuota: string;
+    MaxQuota: string;
+    PledgeAmount: string;
+  end;
+
   // Based on https://docs.vite.org/api/
   TTokenInfo = record
     TokenName: string;
@@ -36,16 +43,63 @@ type
   private
     FHttpClient: TNetHTTPClient;
     function ParseAccountInfo(const AJson: string): TAccountInfo;
+    function ParseAccountQuota(const AJson: string): TAccountQuota;
   public
     constructor Create;
     destructor Destroy; override;
 
     function GetAccountInfo(const AAddress: string): TAccountInfo;
+    function GetAccountQuota(const AAddress: string): TAccountQuota;
   end;
 
 implementation
 
 { TViteService }
+
+function TViteService.ParseAccountQuota(const AJson: string): TAccountQuota;
+var
+  JsonObj, ResultObj: TJSONValue;
+begin
+  Result := Default(TAccountQuota);
+
+  JsonObj := TJSONObject.ParseJSONValue(AJson);
+  if not Assigned(JsonObj) then Exit;
+  try
+    ResultObj := (JsonObj as TJSONObject).GetValue<TJSONObject>('result');
+    if not Assigned(ResultObj) then Exit;
+
+    Result.CurrentQuota := (ResultObj as TJSONObject).GetValue<string>('currentQuota');
+    Result.MaxQuota := (ResultObj as TJSONObject).GetValue<string>('maxQuota');
+    Result.PledgeAmount := (ResultObj as TJSONObject).GetValue<string>('pledgeAmount');
+  finally
+    JsonObj.Free;
+  end;
+end;
+
+function TViteService.GetAccountQuota(const AAddress: string): TAccountQuota;
+var
+  JsonRequest: TJSONObject;
+  RequestStream: TStringStream;
+  ResponseContent: string;
+begin
+  JsonRequest := TJSONObject.Create;
+  try
+    JsonRequest.AddPair('jsonrpc', TJSONString.Create('2.0'));
+    JsonRequest.AddPair('id', TJSONNumber.Create(1));
+    JsonRequest.AddPair('method', TJSONString.Create('contract_getQuotaByAccount'));
+    JsonRequest.AddPair('params', TJSONArray.Create.Add(TJSONString.Create(AAddress)));
+
+    RequestStream := TStringStream.Create(JsonRequest.ToString, TEncoding.UTF8);
+    try
+      ResponseContent := FHttpClient.Post(VITE_NODE_URL, RequestStream).ContentAsString;
+      Result := ParseAccountQuota(ResponseContent);
+    finally
+      RequestStream.Free;
+    end;
+  finally
+    JsonRequest.Free;
+  end;
+end;
 
 constructor TViteService.Create;
 begin

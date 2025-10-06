@@ -1,0 +1,50 @@
+object QuotaHeadFrame: TQuotaHeadFrame
+  Size.Width = 650.000000000000000000
+  Size.Height = 80.000000000000000000
+  Size.PlatformDefault = False
+  object LayoutMain: TLayout
+    Align = Client
+    Size.Width = 650.000000000000000000
+    Size.Height = 80.000000000000000000
+    Size.PlatformDefault = False
+    TabOrder = 0
+    object LabelTitle: TLabel
+      Position.X = 24.000000000000000000
+      Position.Y = 16.000000000000000000
+      Text = 'My Quota'
+      Settings = TTextSettings
+        Font.Size = 18.000000000000000000
+      objl-Text = 'My Quota'
+    end
+    object LabelAvailableBalanceCaption: TLabel
+      Position.X = 24.000000000000000000
+      Position.Y = 48.000000000000000000
+      Text = 'Available Balance (VITE):'
+      Settings = TTextSettings
+      objl-Text = 'Available Balance (VITE):'
+    end
+    object LabelAvailableBalance: TLabel
+      Position.X = 184.000000000000000000
+      Position.Y = 48.000000000000000000
+      Text = '0'
+      Settings = TTextSettings
+        Font.Style = [fsBold]
+      objl-Text = '0'
+    end
+    object LabelQuotaCaption: TLabel
+      Position.X = 320.000000000000000000
+      Position.Y = 48.000000000000000000
+      Text = 'Current Quota:'
+      Settings = TTextSettings
+      objl-Text = 'Current Quota:'
+    end
+    object LabelQuota: TLabel
+      Position.X = 424.000000000000000000
+      Position.Y = 48.000000000000000000
+      Text = '0 UT'
+      Settings = TTextSettings
+        Font.Style = [fsBold]
+      objl-Text = '0 UT'
+    end
+  end
+end

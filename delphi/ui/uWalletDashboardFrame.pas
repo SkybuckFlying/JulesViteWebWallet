@@ -5,16 +5,15 @@ interface
 uses
   System.SysUtils, System.Types, System.UITypes, System.Classes, System.Variants,
   FMX.Types, FMX.Controls, FMX.Forms, FMX.Graphics, FMX.Dialogs, FMX.Layouts, FMX.Controls.Presentation, FMX.StdCtrls,
-  FMX.Edit, FMX.Memo, uViteService, uStringUtils, uAppState, System.Generics.Collections,
-  FMX.Memo.Types, FMX.ScrollBox;
+  FMX.Edit, FMX.Memo, uViteService, uStringUtils, uAppState, System.Generics.Collections, uQuotaHeadFrame,
+  uQRCodeFrame;
 
 type
   TWalletDashboardFrame = class(TFrame)
-    PanelQuotaHead: TPanel;
-    LabelQuotaHead: TLabel;
     PanelContent: TPanel;
     PanelMyQuota: TPanel;
     LabelMyQuota: TLabel;
+    QRCodeFrame: TQRCodeFrame;
     PanelPledgeTx: TPanel;
     LabelPledgeTx: TLabel;
     EditAddress: TEdit;
@@ -38,8 +37,16 @@ implementation
 { TWalletDashboardFrame }
 
 constructor TWalletDashboardFrame.Create(AOwner: TComponent);
+var
+  HeaderFrame: TQuotaHeadFrame;
 begin
   inherited;
+
+  // Create and embed the Header Frame
+  HeaderFrame := TQuotaHeadFrame.Create(Self);
+  HeaderFrame.Parent := Self;
+  HeaderFrame.Align := TAlignLayout.Top;
+
   FViteService := TViteService.Create;
   TAppState.Instance.OnStateChange := HandleStateChange;
   // Trigger initial state render
@@ -56,20 +63,27 @@ end;
 procedure TWalletDashboardFrame.ButtonGetInfoClick(Sender: TObject);
 begin
   MemoResult.Lines.Clear;
-  MemoResult.Lines.Add('Fetching account info...');
+  MemoResult.Lines.Add('Fetching account and quota info...');
   ButtonGetInfo.Enabled := False;
 
   TThread.CreateAnonymousThread(
     procedure
     var
       LAccountInfo: TAccountInfo;
+      LAccountQuota: TAccountQuota;
     begin
       try
+        // Fetch both sets of data in the background
         LAccountInfo := FViteService.GetAccountInfo(EditAddress.Text);
+        LAccountQuota := FViteService.GetAccountQuota(EditAddress.Text);
+
+        // Safely update the global state from the main thread
         TThread.Queue(nil,
           procedure
           begin
+            // Set both properties. The last one will trigger the UI update.
             TAppState.Instance.CurrentAccount := LAccountInfo;
+            TAppState.Instance.CurrentQuota := LAccountQuota;
           end);
       except
         on E: Exception do
@@ -91,8 +105,12 @@ begin
   if AccountInfo.Address = '' then
   begin
      MemoResult.Lines.Add('No account data loaded.');
+     QRCodeFrame.Text := ''; // Clear QR Code
      Exit;
   end;
+
+  // Update QR Code with the current address
+  QRCodeFrame.Text := AccountInfo.Address;
 
   DisplayText := TStringBuilder.Create;
   try

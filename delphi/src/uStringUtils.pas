@@ -37,8 +37,8 @@ begin
   PrefixLen := APrefixExtraLen + ALen;
   SuffixLen := ALen;
 
-  // If the address is not long enough to be truncated, return the original string.
-  // This corrects a flaw in the original JS implementation's logic.
+  // This logic is a direct port of the original JavaScript implementation.
+  // It truncates the string if its length exceeds the combined prefix and suffix length.
   if AAddr.Length > (PrefixLen + SuffixLen) then
     // TStringHelper.Substring is 0-indexed for the start and takes a length parameter.
     Result := AAddr.Substring(0, PrefixLen) + '...' + AAddr.Substring(AAddr.Length - SuffixLen)
