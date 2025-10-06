@@ -5,7 +5,8 @@ interface
 uses
   System.SysUtils, System.Types, System.UITypes, System.Classes, System.Variants,
   FMX.Types, FMX.Controls, FMX.Forms, FMX.Graphics, FMX.Dialogs, FMX.Layouts, FMX.Controls.Presentation, FMX.StdCtrls,
-  FMX.Edit, FMX.Memo, uViteService, uStringUtils, uAppState, System.Generics.Collections;
+  FMX.Edit, FMX.Memo, uViteService, uStringUtils, uAppState, System.Generics.Collections,
+  FMX.Memo.Types, FMX.ScrollBox;
 
 type
   TWalletDashboardFrame = class(TFrame)

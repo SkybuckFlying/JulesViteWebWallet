@@ -20,11 +20,14 @@ object MainForm: TMainForm
       Margins.Top = 5.000000000000000000
       Margins.Right = 5.000000000000000000
       Margins.Bottom = 5.000000000000000000
+      Position.X = 5.000000000000000000
+      Position.Y = 5.000000000000000000
       Size.Width = 140.000000000000000000
       Size.Height = 40.000000000000000000
       Size.PlatformDefault = False
       TabOrder = 0
       Text = 'Wallet'
+      TextSettings.Trimming = None
     end
     object ButtonNavAssets: TButton
       Align = Top
@@ -32,12 +35,14 @@ object MainForm: TMainForm
       Margins.Top = 5.000000000000000000
       Margins.Right = 5.000000000000000000
       Margins.Bottom = 5.000000000000000000
-      Position.Y = 50.000000000000000000
+      Position.X = 5.000000000000000000
+      Position.Y = 55.000000000000000000
       Size.Width = 140.000000000000000000
       Size.Height = 40.000000000000000000
       Size.PlatformDefault = False
       TabOrder = 1
       Text = 'Assets'
+      TextSettings.Trimming = None
     end
     object ButtonNavTrade: TButton
       Align = Top
@@ -45,12 +50,14 @@ object MainForm: TMainForm
       Margins.Top = 5.000000000000000000
       Margins.Right = 5.000000000000000000
       Margins.Bottom = 5.000000000000000000
-      Position.Y = 95.000000000000000000
+      Position.X = 5.000000000000000000
+      Position.Y = 105.000000000000000000
       Size.Width = 140.000000000000000000
       Size.Height = 40.000000000000000000
       Size.PlatformDefault = False
       TabOrder = 2
       Text = 'Trade'
+      TextSettings.Trimming = None
     end
     object ButtonNavSettings: TButton
       Align = Top
@@ -58,62 +65,114 @@ object MainForm: TMainForm
       Margins.Top = 5.000000000000000000
       Margins.Right = 5.000000000000000000
       Margins.Bottom = 5.000000000000000000
-      Position.Y = 140.000000000000000000
+      Position.X = 5.000000000000000000
+      Position.Y = 155.000000000000000000
       Size.Width = 140.000000000000000000
       Size.Height = 40.000000000000000000
       Size.PlatformDefault = False
       TabOrder = 3
       Text = 'Settings'
+      TextSettings.Trimming = None
     end
   end
   object MainTabControl: TTabControl
     Align = Client
-    Position.X = 150.000000000000000000
     Size.Width = 650.000000000000000000
     Size.Height = 520.000000000000000000
     Size.PlatformDefault = False
     TabOrder = 1
     TabPosition = None
+    Sizes = (
+      650s
+      520s
+      650s
+      520s
+      650s
+      520s
+      650s
+      520s)
     object TabWallet: TTabItem
+      CustomIcon = <
+        item
+        end>
+      TextSettings.Trimming = None
+      IsSelected = False
+      Size.Width = 8.000000000000000000
+      Size.Height = 8.000000000000000000
+      Size.PlatformDefault = False
+      StyleLookup = ''
+      TabOrder = 0
       Text = 'TabWallet'
+      ExplicitSize.cx = 50.000000000000000000
+      ExplicitSize.cy = 50.000000000000000000
     end
     object TabAssets: TTabItem
+      CustomIcon = <
+        item
+        end>
+      TextSettings.Trimming = None
+      IsSelected = False
+      Size.Width = 8.000000000000000000
+      Size.Height = 8.000000000000000000
+      Size.PlatformDefault = False
+      StyleLookup = ''
+      TabOrder = 0
       Text = 'TabAssets'
+      ExplicitSize.cx = 50.000000000000000000
+      ExplicitSize.cy = 50.000000000000000000
       object LabelAssets: TLabel
         Align = Center
         Size.Width = 100.000000000000000000
         Size.Height = 17.000000000000000000
         Size.PlatformDefault = False
-        TabOrder = 0
         Text = 'Assets Page'
-        Settings = TTextSettings
-        objl-Text = 'Assets Page'
+        TabOrder = 0
       end
     end
     object TabTrade: TTabItem
+      CustomIcon = <
+        item
+        end>
+      TextSettings.Trimming = None
+      IsSelected = False
+      Size.Width = 8.000000000000000000
+      Size.Height = 8.000000000000000000
+      Size.PlatformDefault = False
+      StyleLookup = ''
+      TabOrder = 0
       Text = 'TabTrade'
+      ExplicitSize.cx = 50.000000000000000000
+      ExplicitSize.cy = 50.000000000000000000
       object LabelTrade: TLabel
         Align = Center
         Size.Width = 86.000000000000000000
         Size.Height = 17.000000000000000000
         Size.PlatformDefault = False
-        TabOrder = 0
         Text = 'Trade Page'
-        Settings = TTextSettings
-        objl-Text = 'Trade Page'
+        TabOrder = 0
       end
     end
     object TabSettings: TTabItem
+      CustomIcon = <
+        item
+        end>
+      TextSettings.Trimming = None
+      IsSelected = False
+      Size.Width = 8.000000000000000000
+      Size.Height = 8.000000000000000000
+      Size.PlatformDefault = False
+      StyleLookup = ''
+      TabOrder = 0
       Text = 'TabSettings'
+      ExplicitSize.cx = 50.000000000000000000
+      ExplicitSize.cy = 50.000000000000000000
       object LabelSettings: TLabel
         Align = Center
         Size.Width = 105.000000000000000000
         Size.Height = 17.000000000000000000
         Size.PlatformDefault = False
-        TabOrder = 0
         Text = 'Settings Page'
-        Settings = TTextSettings
-        objl-Text = 'Settings Page'
+        TabOrder = 0
       end
     end
   end
