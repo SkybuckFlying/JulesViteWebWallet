@@ -1,0 +1,120 @@
+object WalletDashboardFrame: TWalletDashboardFrame
+  Size.Width = 650.000000000000000000
+  Size.Height = 520.000000000000000000
+  Size.PlatformDefault = False
+  object PanelQuotaHead: TPanel
+    Align = Top
+    Size.Width = 650.000000000000000000
+    Size.Height = 80.000000000000000000
+    Size.PlatformDefault = False
+    TabOrder = 0
+    object LabelQuotaHead: TLabel
+      Align = Center
+      Size.Width = 139.000000000000000000
+      Size.Height = 17.000000000000000000
+      Size.PlatformDefault = False
+      TabOrder = 0
+      Text = 'Placeholder for Quota Head'
+      Settings = TTextSettings
+      objl-Text = 'Placeholder for Quota Head'
+    end
+  end
+  object PanelContent: TPanel
+    Align = Top
+    Position.Y = 80.000000000000000000
+    Size.Width = 650.000000000000000000
+    Size.Height = 200.000000000000000000
+    Size.PlatformDefault = False
+    TabOrder = 1
+    object PanelMyQuota: TPanel
+      Align = Left
+      Margins.Left = 10.000000000000000000
+      Margins.Top = 10.000000000000000000
+      Margins.Right = 10.000000000000000000
+      Margins.Bottom = 10.000000000000000000
+      Size.Width = 250.000000000000000000
+      Size.Height = 180.000000000000000000
+      Size.PlatformDefault = False
+      TabOrder = 0
+      object LabelMyQuota: TLabel
+        Align = Center
+        Size.Width = 134.000000000000000000
+        Size.Height = 17.000000000000000000
+        Size.PlatformDefault = False
+        TabOrder = 0
+        Text = 'Placeholder for My Quota'
+        Settings = TTextSettings
+        objl-Text = 'Placeholder for My Quota'
+      end
+    end
+    object PanelPledgeTx: TPanel
+      Align = Client
+      Margins.Left = 10.000000000000000000
+      Margins.Top = 10.000000000000000000
+      Margins.Right = 10.000000000000000000
+      Margins.Bottom = 10.000000000000000000
+      Position.X = 270.000000000000000000
+      Size.Width = 370.000000000000000000
+      Size.Height = 180.000000000000000000
+      Size.PlatformDefault = False
+      TabOrder = 1
+      object LabelPledgeTx: TLabel
+        Align = Top
+        Size.Width = 143.000000000000000000
+        Size.Height = 17.000000000000000000
+        Size.PlatformDefault = False
+        TabOrder = 0
+        Text = 'Pledge Tx / API Test'
+        Settings = TTextSettings
+        objl-Text = 'Placeholder for Pledge Tx'
+      end
+      object EditAddress: TEdit
+        Position.X = 16.000000000000000000
+        Position.Y = 32.000000000000000000
+        Size.Width = 337.000000000000000000
+        Size.Height = 22.000000000000000000
+        Size.PlatformDefault = False
+        TabOrder = 1
+        Text = 'vite_0da6ff16542378b9a19427323558f6920155b5ae684a09e0a8'
+      end
+      object ButtonGetInfo: TButton
+        Position.X = 16.000000000000000000
+        Position.Y = 64.000000000000000000
+        Size.Width = 150.000000000000000000
+        Size.Height = 22.000000000000000000
+        Size.PlatformDefault = False
+        TabOrder = 2
+        Text = 'Get Account Info'
+      end
+      object MemoResult: TMemo
+        Position.X = 16.000000000000000000
+        Position.Y = 96.000000000000000000
+        Size.Width = 337.000000000000000000
+        Size.Height = 76.000000000000000000
+        Size.PlatformDefault = False
+        TabOrder = 3
+        Viewport.Width = 333.000000000000000000
+        Viewport.Height = 72.000000000000000000
+      end
+    end
+  end
+  object PanelList: TPanel
+    Align = Client
+    Position.X = 0.000000000000000000
+    Position.Y = 280.000000000000000000
+    Size.Width = 650.000000000000000000
+    Size.Height = 240.000000000000000000
+    Size.PlatformDefault = False
+    TabOrder = 2
+    object LabelList: TLabel
+      Align = Center
+      Size.Width = 111.000000000000000000
+      Size.Height = 17.000000000000000000
+      Size.PlatformDefault = False
+      TabOrder = 0
+      Text = 'Placeholder for List'
+      Settings = TTextSettings
+      objl-Text = 'Placeholder for List'
+    end
+  end
+end

@@ -8,59 +8,113 @@ object MainForm: TMainForm
   FormFactor.Height = 480
   FormFactor.Devices = [Desktop]
   DesignerMasterStyle = 0
-  object QRCodeFrame1: TQRCodeFrame
-    Position.X = 40
-    Position.Y = 40
-    Size.Width = 200.000000000000000000
-    Size.Height = 200.000000000000000000
+  object NavPanel: TPanel
+    Align = Left
+    Size.Width = 150.000000000000000000
+    Size.Height = 520.000000000000000000
     Size.PlatformDefault = False
     TabOrder = 0
+    object ButtonNavWallet: TButton
+      Align = Top
+      Margins.Left = 5.000000000000000000
+      Margins.Top = 5.000000000000000000
+      Margins.Right = 5.000000000000000000
+      Margins.Bottom = 5.000000000000000000
+      Size.Width = 140.000000000000000000
+      Size.Height = 40.000000000000000000
+      Size.PlatformDefault = False
+      TabOrder = 0
+      Text = 'Wallet'
+    end
+    object ButtonNavAssets: TButton
+      Align = Top
+      Margins.Left = 5.000000000000000000
+      Margins.Top = 5.000000000000000000
+      Margins.Right = 5.000000000000000000
+      Margins.Bottom = 5.000000000000000000
+      Position.Y = 50.000000000000000000
+      Size.Width = 140.000000000000000000
+      Size.Height = 40.000000000000000000
+      Size.PlatformDefault = False
+      TabOrder = 1
+      Text = 'Assets'
+    end
+    object ButtonNavTrade: TButton
+      Align = Top
+      Margins.Left = 5.000000000000000000
+      Margins.Top = 5.000000000000000000
+      Margins.Right = 5.000000000000000000
+      Margins.Bottom = 5.000000000000000000
+      Position.Y = 95.000000000000000000
+      Size.Width = 140.000000000000000000
+      Size.Height = 40.000000000000000000
+      Size.PlatformDefault = False
+      TabOrder = 2
+      Text = 'Trade'
+    end
+    object ButtonNavSettings: TButton
+      Align = Top
+      Margins.Left = 5.000000000000000000
+      Margins.Top = 5.000000000000000000
+      Margins.Right = 5.000000000000000000
+      Margins.Bottom = 5.000000000000000000
+      Position.Y = 140.000000000000000000
+      Size.Width = 140.000000000000000000
+      Size.Height = 40.000000000000000000
+      Size.PlatformDefault = False
+      TabOrder = 3
+      Text = 'Settings'
+    end
   end
-  object EditQRCode: TEdit
-    Position.X = 40
-    Position.Y = 256
-    Size.Width = 200.000000000000000000
-    Size.Height = 22.000000000000000000
+  object MainTabControl: TTabControl
+    Align = Client
+    Position.X = 150.000000000000000000
+    Size.Width = 650.000000000000000000
+    Size.Height = 520.000000000000000000
     Size.PlatformDefault = False
     TabOrder = 1
-    Text = 'vite_0000000000000000000000000000000000000000a4f3a0cb58'
-  end
-  object ButtonGenerateQR: TButton
-    Action
-    Position.X = 40
-    Position.Y = 296
-    Size.Width = 200.000000000000000000
-    Size.Height = 22.000000000000000000
-    Size.PlatformDefault = False
-    TabOrder = 2
-    Text = 'Generate QR Code'
-  end
-  object EditAddress: TEdit
-    Position.X = 280
-    Position.Y = 40
-    Size.Width = 481.000000000000000000
-    Size.Height = 22.000000000000000000
-    Size.PlatformDefault = False
-    TabOrder = 3
-    Text = 'vite_0da6ff16542378b9a19427323558f6920155b5ae684a09e0a8'
-  end
-  object ButtonGetInfo: TButton
-    Position.X = 280
-    Position.Y = 80
-    Size.Width = 200.000000000000000000
-    Size.Height = 22.000000000000000000
-    Size.PlatformDefault = False
-    TabOrder = 4
-    Text = 'Get Account Info'
-  end
-  object MemoResult: TMemo
-    Position.X = 280
-    Position.Y = 120
-    Size.Width = 481.000000000000000000
-    Size.Height = 361.000000000000000000
-    Size.PlatformDefault = False
-    TabOrder = 5
-    Viewport.Width = 477.000000000000000000
-    Viewport.Height = 357.000000000000000000
+    TabPosition = None
+    object TabWallet: TTabItem
+      Text = 'TabWallet'
+    end
+    object TabAssets: TTabItem
+      Text = 'TabAssets'
+      object LabelAssets: TLabel
+        Align = Center
+        Size.Width = 100.000000000000000000
+        Size.Height = 17.000000000000000000
+        Size.PlatformDefault = False
+        TabOrder = 0
+        Text = 'Assets Page'
+        Settings = TTextSettings
+        objl-Text = 'Assets Page'
+      end
+    end
+    object TabTrade: TTabItem
+      Text = 'TabTrade'
+      object LabelTrade: TLabel
+        Align = Center
+        Size.Width = 86.000000000000000000
+        Size.Height = 17.000000000000000000
+        Size.PlatformDefault = False
+        TabOrder = 0
+        Text = 'Trade Page'
+        Settings = TTextSettings
+        objl-Text = 'Trade Page'
+      end
+    end
+    object TabSettings: TTabItem
+      Text = 'TabSettings'
+      object LabelSettings: TLabel
+        Align = Center
+        Size.Width = 105.000000000000000000
+        Size.Height = 17.000000000000000000
+        Size.PlatformDefault = False
+        TabOrder = 0
+        Text = 'Settings Page'
+        Settings = TTextSettings
+        objl-Text = 'Settings Page'
+      end
+    end
   end
 end
