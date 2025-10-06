@@ -1,0 +1,66 @@
+object MainForm: TMainForm
+  Left = 0
+  Top = 0
+  Caption = 'Vite Wallet Delphi Conversion'
+  ClientHeight = 520
+  ClientWidth = 800
+  FormFactor.Width = 320
+  FormFactor.Height = 480
+  FormFactor.Devices = [Desktop]
+  DesignerMasterStyle = 0
+  object QRCodeFrame1: TQRCodeFrame
+    Position.X = 40
+    Position.Y = 40
+    Size.Width = 200.000000000000000000
+    Size.Height = 200.000000000000000000
+    Size.PlatformDefault = False
+    TabOrder = 0
+  end
+  object EditQRCode: TEdit
+    Position.X = 40
+    Position.Y = 256
+    Size.Width = 200.000000000000000000
+    Size.Height = 22.000000000000000000
+    Size.PlatformDefault = False
+    TabOrder = 1
+    Text = 'vite_0000000000000000000000000000000000000000a4f3a0cb58'
+  end
+  object ButtonGenerateQR: TButton
+    Action
+    Position.X = 40
+    Position.Y = 296
+    Size.Width = 200.000000000000000000
+    Size.Height = 22.000000000000000000
+    Size.PlatformDefault = False
+    TabOrder = 2
+    Text = 'Generate QR Code'
+  end
+  object EditAddress: TEdit
+    Position.X = 280
+    Position.Y = 40
+    Size.Width = 481.000000000000000000
+    Size.Height = 22.000000000000000000
+    Size.PlatformDefault = False
+    TabOrder = 3
+    Text = 'vite_0da6ff16542378b9a19427323558f6920155b5ae684a09e0a8'
+  end
+  object ButtonGetInfo: TButton
+    Position.X = 280
+    Position.Y = 80
+    Size.Width = 200.000000000000000000
+    Size.Height = 22.000000000000000000
+    Size.PlatformDefault = False
+    TabOrder = 4
+    Text = 'Get Account Info'
+  end
+  object MemoResult: TMemo
+    Position.X = 280
+    Position.Y = 120
+    Size.Width = 481.000000000000000000
+    Size.Height = 361.000000000000000000
+    Size.PlatformDefault = False
+    TabOrder = 5
+    Viewport.Width = 477.000000000000000000
+    Viewport.Height = 357.000000000000000000
+  end
+end

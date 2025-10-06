@@ -1,0 +1,11 @@
+object QRCodeFrame: TQRCodeFrame
+  Size.Width = 246.000000000000000000
+  Size.Height = 246.000000000000000000
+  Size.PlatformDefault = False
+  object Image: TImage
+    Align = Client
+    Size.Width = 246.000000000000000000
+    Size.Height = 246.000000000000000000
+    Size.PlatformDefault = False
+  end
+end
